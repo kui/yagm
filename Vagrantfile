@@ -5,7 +5,7 @@ require 'yaml'
 
 vms = YAML.load_file File.join(File.dirname(__FILE__),'vagrantvms.yml')
 
-Vagrant.configure("2") do |config|
+Vagrant.configure('2') do |config|
   vms.each do |name, values|
     config.vm.define name.to_sym do |vm_config|
       vm_config.vm.box = values['box']
