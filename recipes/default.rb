@@ -3,6 +3,8 @@
 # Recipe:: default
 #
 # Copyright (C) 2013 Keiichiro UI
-# 
+#
 # All rights reserved - Do Not Redistribute
 #
+
+include_recipe "hostname"
