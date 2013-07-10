@@ -7,9 +7,13 @@
 #   box: opscode-centos-6.4
 #   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
 
-debian71:
-  box: opscode-debian-7.1.0
-  box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+debian60:
+  box: opscode-debian-6.0.7
+  box_url: http://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-6.0.7_provisionerless.box
+
+# debian71:
+#   box: opscode-debian-7.1.0
+#   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
 
 ubuntu1204:
   box: opscode-ubuntu-12.04
