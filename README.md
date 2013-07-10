@@ -10,4 +10,4 @@
 
 # Author
 
-Author:: YOUR_NAME (<YOUR_EMAIL>)
+Author:: Keiichiro UI (<keiichiro.ui@gmail.com>)

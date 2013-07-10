@@ -1,6 +1,6 @@
 name             'yagm'
-maintainer       'YOUR_NAME'
-maintainer_email 'YOUR_EMAIL'
+maintainer       'Keiichiro UI'
+maintainer_email 'keiichiro.ui@gmail.com'
 license          'All rights reserved'
 description      'Installs/Configures yagm'
 long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
