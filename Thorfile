@@ -15,7 +15,7 @@ class Default < Thor
     vms_matched_with(regex).each do |name|
       run "vagrant up #{name}" and
         run "vagrant ssh-config #{name} > #{ssh_config name}"
-    end
+    end.reduce(true){|memo, value| memo and value}
   end
 
   desc 'vagrant-destroy [VM_NAME_REGEX]', 'exec `vagrant destroy --force [VM_NAME]\''
@@ -23,16 +23,16 @@ class Default < Thor
     vms_matched_with(regex).each do |name|
       run "vagrant destroy --force #{name}" and
         run "rm #{ssh_config name}" if File.file? ssh_config name
-    end
+    end.reduce(true){|memo, value| memo and value}
   end
 
   desc 'integration-test VM_NAME_REGEX', 'test for multiple-platform with vagrant'
   def integration_test(regex)
     vms_matched_with(regex).each do |name|
-      invoke :vagrant_up, ["^#{name}$"]
-      invoke :bootstrap, ["^#{name}$"]
-      invoke :rspec, ["^#{name}$"]
-      invoke :vagrant_destroy, ["^#{name}$"]
+      invoke :vagrant_up, ["^#{name}$"] and
+        invoke :bootstrap, ["^#{name}$"] and
+        invoke :rspec, ["^#{name}$"] and
+        invoke :vagrant_destroy, ["^#{name}$"]
     end
   end
 
@@ -40,23 +40,24 @@ class Default < Thor
   def bootstrap(regex='')
     vms_matched_with(regex).map do |name|
       run "bundle exec knife solo bootstrap #{name} -F #{ssh_config name}"
-    end
+    end.reduce(true){|memo, value| memo and value}
   end
 
   desc 'cook [VM_NAME_REGEX]', 'exec `knif cook prepare HOSTNAME`'
   def cook(regex='')
-    vms_matched_with(regex).each do |name|
+    vms_matched_with(regex).map do |name|
       run "bundle exec knife solo cook #{name} -F #{ssh_config name}"
-    end
+    end.reduce(true){|memo, value| memo and value}
   end
 
   desc 'rspec [VM_NAME_REGEX]', 'exec `rspec`'
   def rspec(regex='')
-    vms_matched_with(regex).each do |name|
+    result = vms_matched_with(regex).each do |name|
       ENV['SPEC_SSH_CONFIG'] = ssh_config name
       run "rspec -I spec spec/#{name}"
-    end
-    ENV.delete 'SPEC_SSH_CONFIG'
+    end.reduce(true){|memo, value| memo and value}
+    ENV.delete 'SPEC_SSH_CONFIG' if result
+    result
   end
 
   desc 'vm-list', 'list vm names managed by vagrant'
