@@ -46,7 +46,8 @@ class Default < Thor
   desc 'cook [VM_NAME_REGEX]', 'exec `knif cook prepare HOSTNAME`'
   def cook(regex='')
     vms_matched_with(regex).map do |name|
-      run "bundle exec knife solo cook #{name} -F #{ssh_config name}"
+      run "bundle exec berks install" and
+        run "bundle exec knife solo cook #{name} -F #{ssh_config name}"
     end.reduce(true){|memo, value| memo and value}
   end
 
@@ -54,9 +55,12 @@ class Default < Thor
   def rspec(regex='')
     result = vms_matched_with(regex).each do |name|
       ENV['SPEC_SSH_CONFIG'] = ssh_config name
-      run "rspec -I spec spec/#{name}"
+      ENV['TARGET_HOST'] = name
+      run "rspec spec"
     end.reduce(true){|memo, value| memo and value}
-    ENV.delete 'SPEC_SSH_CONFIG' if result
+
+    ENV.delete 'SPEC_SSH_CONFIG'
+    ENV.delete 'TARGET_HOST'
     result
   end
 
@@ -67,8 +71,13 @@ class Default < Thor
 
   no_commands do
     def vms_matched_with(regex='')
-      VMS.keys.delete_if do |n|
+      vms = VMS.keys.delete_if do |n|
         n.match(Regexp.new(regex)).nil?
+      end
+      if vms.empty?
+        abort "No VMs matched with regex(/#{regex}/)"
+      else
+        vms
       end
     end
     def ssh_config(name)
