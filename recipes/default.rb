@@ -7,4 +7,5 @@
 # All rights reserved - Do Not Redistribute
 #
 
-include_recipe "hostname"
+include_recipe 'hostname'
+include_recipe 'selinux::disabled'
