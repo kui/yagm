@@ -5,7 +5,24 @@ require 'bundler/setup'
 require 'berkshelf/thor'
 require 'yaml'
 
-VMS = YAML.load_file "vagrantvms.yml"
+module VagrantVM
+  VMS = YAML.load_file "vagrantvms.yml"
+
+  def vms_matched_with(regex='')
+    vms = VMS.keys.delete_if do |n|
+      n.match(Regexp.new(regex)).nil?
+    end
+    if vms.empty?
+      abort "No VMs matched with regex(/#{regex}/)"
+    else
+      vms
+    end
+  end
+
+  def ssh_config(name)
+    ".vagrant/#{name}.ssh_config"
+  end
+end
 
 class Default < Thor
   include Thor::Actions
@@ -76,21 +93,5 @@ class Vagrant < Thor
       run "vagrant destroy --force #{name}" and
         run "rm #{ssh_config name}" if File.file? ssh_config name
     end.reduce(true){|memo, value| memo and value}
-  end
-end
-
-module VagrantVM
-  def vms_matched_with(regex='')
-    vms = VMS.keys.delete_if do |n|
-      n.match(Regexp.new(regex)).nil?
-    end
-    if vms.empty?
-      abort "No VMs matched with regex(/#{regex}/)"
-    else
-      vms
-    end
-  end
-  def ssh_config(name)
-    ".vagrant/#{name}.ssh_config"
   end
 end
