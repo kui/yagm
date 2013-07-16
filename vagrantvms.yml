@@ -11,13 +11,13 @@ debian6: # workaround for [1]
   box: debian6
   box_url: http://puppet-vagrant-boxes.puppetlabs.com/debian-607-x64-vbox4210-nocm.box
 
-# debian71: # [1] not supported by Chef
-#   box: opscode-debian-7.1.0
-#   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
+debian71: # [1] not supported by Chef
+  box: opscode-debian-7.1.0
+  box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_debian-7.1.0_provisionerless.box
 
-ubuntu1204:
-  box: opscode-ubuntu-12.04
-  box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+# ubuntu1204:
+#   box: opscode-ubuntu-12.04
+#   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
 
 # ubuntu1304:
 #   box: opscode-ubuntu-13.04
