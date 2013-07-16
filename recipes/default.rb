@@ -9,3 +9,4 @@
 
 include_recipe 'hostname'
 include_recipe 'selinux::disabled'
+include_recipe 'yagm::postfix'
