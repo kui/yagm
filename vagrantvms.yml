@@ -3,9 +3,9 @@
 #   box: opscode-centos-5.9
 #   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-5.9_provisionerless.box
 
-centos64:
-  box: opscode-centos-6.4
-  box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
+# centos64:
+#   box: opscode-centos-6.4
+#   box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_centos-6.4_provisionerless.box
 
 debian6: # workaround for [1]
   box: debian6
