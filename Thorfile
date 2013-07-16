@@ -42,16 +42,14 @@ class Default < Thor
   desc 'bootstrap [VM_NAME_REGEX]', 'exec `knif solo bootstrap HOSTNAME`'
   def bootstrap(regex='')
     vms_matched_with(regex).map do |name|
-      run "bundle exec berks install" and
-        run "bundle exec knife solo bootstrap #{name} -F #{ssh_config name}"
+      run "bundle exec knife solo bootstrap #{name} -F #{ssh_config name}"
     end.reduce(true){|memo, value| memo and value}
   end
 
   desc 'cook [VM_NAME_REGEX]', 'exec `knif cook prepare HOSTNAME`'
   def cook(regex='')
     vms_matched_with(regex).map do |name|
-      run "bundle exec berks install" and
-        run "bundle exec knife solo cook #{name} -F #{ssh_config name}"
+      run "bundle exec knife solo cook #{name} -F #{ssh_config name}"
     end.reduce(true){|memo, value| memo and value}
   end
 
