@@ -9,5 +9,9 @@
 
 include_recipe 'hostname'
 include_recipe 'selinux::disabled'
-include_recipe 'yagm::postfix'
-include_recipe 'yagm::dovecot'
+include_recipe 'postfix-dovecot'
+
+postfixadmin_admin 'admin@admindomain.com' do
+  password 'foobarbaz'
+  action :create
+end

@@ -8,6 +8,7 @@ version          '0.1.0'
 
 depends 'hostname', '~> 0.1.0'
 depends 'selinux', '~> 0.5.6'
+depends 'postfix-dovecot', '~> 0.1.1'
 
 supports 'ubuntu', '>= 12.04'
 supports 'debian', '>= 6.0.7'
